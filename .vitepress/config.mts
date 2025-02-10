@@ -2,6 +2,8 @@ import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/blog/",
+  head: [["link", { rel: "icon", href: "/blog/log.svg" }]],
   title: "我的前端学习之路",
   description: "一个普通前端的学习之路",
   themeConfig: {
