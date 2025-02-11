@@ -10,7 +10,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首页', link: '/' },
-      { text: '知识库', link: '/markdown-examples' },
+      { text: '知识库', link: '/webWorker' },
     ],
 
     sidebar: [

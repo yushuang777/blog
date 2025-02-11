@@ -3,13 +3,13 @@
 layout: home
 
 hero:
-  name: "记录前端学习的点滴"
-  text: "一个学习记录分享"
+  name: '记录前端学习的点滴'
+  text: '一个学习记录分享'
   tagline: 持续学习，持续进步
   actions:
     - theme: brand
       text: 学习记录
-      link: /markdown-examples
+      link: /webWorker
     - theme: alt
       text: 目标计划
       link: /api-examples
