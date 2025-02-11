@@ -17,18 +17,18 @@ export default defineConfig({
       {
         text: '技术分享记录',
         items: [
-          { text: '基于WebWorker的技术分享', link: '/基于WebWorker的技术分享' },
+          { text: '基于WebWorker的技术分享', link: '/webWorker' },
           {
-            text: 'js高阶函数_ 利用惰性函数进行性能优化',
-            link: '/js高阶函数_ 利用惰性函数进行性能优化',
+            text: 'js利用惰性函数进行性能优化',
+            link: '/lazyFunction',
           },
           {
-            text: '自定义redux  核心源码分享',
-            link: '/自定义redux  核心源码分享',
+            text: '自定义redux核心源码分享',
+            link: '/redux',
           },
           {
             text: 'Vue组件库的搭建',
-            link: '/Vue组件库的搭建',
+            link: '/vueCompoment',
           },
         ],
       },
