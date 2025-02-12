@@ -33,12 +33,12 @@ export default defineConfig({
         ],
       },
     ],
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
     ],
     footer: {
-      copyright: '@ 2025-ys blog',
+      copyright: `版权所有 © 2023-${new Date().getFullYear()} 余双`,
     },
   },
+  lastUpdated: true,
 });
