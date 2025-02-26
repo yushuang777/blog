@@ -30,6 +30,14 @@ export default defineConfig({
             text: 'Vue组件库的搭建',
             link: '/vueCompoment',
           },
+          {
+            text: '渐进式web应用--pwa',
+            link: '/pwa',
+          },
+          {
+            text: '自定义hooks',
+            link: '/autoHooks',
+          },
         ],
       },
     ],
