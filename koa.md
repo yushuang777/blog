@@ -145,8 +145,6 @@ npm install @koa/cors
 
 结合postman测试
 
-![image-20250401204226577](C:\Users\11031\AppData\Roaming\Typora\typora-user-images\image-20250401204226577.png)
-
 ```javascript
 const Koa = require("koa");
 const Router = require("koa-router");
@@ -203,8 +201,6 @@ app.listen(3000);
 
 ```
 
-![image-20250401204459817](C:\Users\11031\AppData\Roaming\Typora\typora-user-images\image-20250401204459817.png)
-
 获取get请求中的params
 
 ```javascript
@@ -229,11 +225,6 @@ app.use(router.routes()).use(router.allowedMethods()); // 允许所有方法;
 app.listen(3000);
 
 ```
-
-![image-20250401205650514](C:\Users\11031\AppData\Roaming\Typora\typora-user-images\image-20250401205650514.png)
-
-localhost:3000/api/api?name=123&age=28
-![image-20250401205711367](C:\Users\11031\AppData\Roaming\Typora\typora-user-images\image-20250401205711367.png)
 
 
 
@@ -271,8 +262,4 @@ app.use(router.routes()).use(router.allowedMethods()); // 允许所有方法;
 app.listen(3000);
 
 ```
-
-
-
-![image-20250401210040561](C:\Users\11031\AppData\Roaming\Typora\typora-user-images\image-20250401210040561.png)
 
