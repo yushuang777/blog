@@ -263,3 +263,146 @@ app.listen(3000);
 
 ```
 
+
+
+### 5.koa配置开发热加载，ES6语法支持webpack
+
+
+
+安装
+
+```
+npm install -D nodemon
+```
+
+
+
+启动
+
+```
+npx nodemon src/index.js
+```
+
+
+在packge.json配置
+
+```javascript
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+```
+
+
+安装webpack
+
+```
+npm install -D webpack webpack-cli
+```
+
+安装一系列包
+
+```
+npm install clean-webpack-plugin webpack-node-externals @babel/core @babel/node @babel/preset-env babel-loader cross-env
+```
+
+
+
+webpack配置
+
+新建 webpack.config.js文件
+
+```javascript
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpackconfig = {
+  target: "node",
+  mode: "development",
+  entry: {
+    server: path.join(__dirname, "index.js"),
+  },
+  output: {
+    filename: "[name].bundle.js",
+    path: path.join(__dirname, "../dist"),
+  },
+  devtool: "eval-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        use: {
+          loader: "babel-loader",
+        },
+        exclude: [path.join(__dirname, "../node_modules")],
+      },
+    ],
+  },
+  externals: [nodeExternals()],
+  plugins: [new CleanWebpackPlugin()],
+  node: {
+    global: true,
+    __filename: true,
+    __dirname: true,
+  },
+};
+
+module.exports = webpackconfig;
+
+```
+
+新建.babelrc文件
+
+```javascript
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ]
+}
+
+```
+
+
+
+这样后可以使用es6语法
+
+如：使用import
+
+```javascript
+import Koa from "koa";
+const Router = require("koa-router");
+const cors = require("@koa/cors");
+const { koaBody } = require("koa-body");
+const json = require("koa-json");
+const app = new Koa();
+const router = new Router();
+
+```
+
+启动方式调整
+
+```javascript
+npx babel-node index.js
+```
+
+开启热加载
+
+```
+npx nodemon --exec babel-node index.js
+```
+
+
+在package.json文件中配置
+
+```javascript
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+```
+
