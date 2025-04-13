@@ -499,7 +499,7 @@ const webpackconfig = {
     ],
   },
   externals: [nodeExternals()],
-  plugins: [new CleanWebpackPlugin(),new webpack.DefinePlugin({'oprocess.env':(process.env.NODE_ENV==='production'||
+  plugins: [new CleanWebpackPlugin(),new webpack.DefinePlugin({'process.env':(process.env.NODE_ENV==='production'||
     process.env.NODE_ENV==='prod')?'production':'development'})],
   node: {
     global: true,
@@ -525,14 +525,14 @@ npm install webpack-merge -d
 ```
 
 ```javascript
-const webpackMerge = require("webpack-merge");
+const {webpackMerge} = require("webpack-merge");
 const base = require("./webpack.config.base");
 const webpackconfig =webpackMerge(base,{
   mode: "development",
   devtool: "eval-source-map",
   stats:{children:false}
 })
-module,exports = webpackconfig;
+module.exports = webpackconfig;
 ```
 
 
@@ -546,7 +546,7 @@ npm install terser-webpack-plugin --save-dev
 ```
 
 ```javascript
-const webpackMerge = require("webpack-merge");
+const {webpackMerge} = require("webpack-merge");
 const base = require("./webpack.config.base");
 const terserPlugin = require("terser-webpack-plugin");
 const webpackconfig =webpackMerge(base,{
@@ -572,6 +572,78 @@ const webpackconfig =webpackMerge(base,{
     })]
   }
 })
-module,exports = webpackconfig;
+module.exports = webpackconfig;
+```
+
+
+
+### 7.koa应用打包优化
+
+配置splitChunks
+splitChunk是Webpack中的一种优化策略，主要用于代码分割。它将代码分割成多个块
+
+```javascript
+    splitChunks:{
+      cacheGroups:{
+        commons:{
+         name:"commons",
+         chunks:"initial",
+         minChunks:3,
+         enforce:true
+        }
+      }
+    }
+```
+
+
+
+删除根目录 webpack.config.js
+
+新增
+
+```javascript
+const path = require("path");
+exports.resolve = function resolve(dir) {
+  return path.join(__dirname, '..', dir);
+};
+
+// 修改APP_PATH指向根目录
+exports.APP_PATH = exports.resolve('');  // 空字符串表示根目录
+exports.DIST_PATH = exports.resolve('dist');
+```
+
+引用
+
+```javascript
+  entry: {
+    server: path.join(utils.APP_PATH, "index.js"),
+  },
+  output: {
+    filename: "[name].bundle.js",
+    path: utils.DIST_PATH,
+    publicPath: "/"  // 添加publicPath配置
+  },
+```
+
+
+
+安装cross-env
+
+在package.json配置命令
+
+```
+ "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js",
+```
+
+安装rimraf
+
+```
+npm install -d rimraf
+```
+
+配置命令
+
+```
+  "clean": "rimraf dist"
 ```
 
