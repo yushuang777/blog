@@ -42,7 +42,13 @@ export default defineConfig({
       },
       {
         text: "大前端学习记录",
-        items: [{ text: "koa入门", link: "/koa" }],
+        items: [
+          { text: "koa入门", link: "/koa" },
+          {
+            text: "React组件库搭建",
+            link: "/reactCompoment",
+          },
+        ],
       },
     ],
     socialLinks: [
