@@ -1,16 +1,14 @@
 # React 组件库搭建
 
-
-
 ## 1.初始化项目
 
-以vite为例
+以 vite 为例
 
-在github搜索awesome-vite，其中有大量快速生成项目案例
+在 github 搜索 awesome-vite，其中有大量快速生成项目案例
 
 在此使用 react-ts-vite-template
 
-点击use this template 添加到自己的github仓库中
+点击 use this template 添加到自己的 github 仓库中
 
 ```
 git clone https://github.com/fabien-ml/react-ts-vite-template.git
@@ -24,15 +22,13 @@ git clone https://github.com/fabien-ml/react-ts-vite-template.git
 npm run dev 启动项目
 ```
 
-
-
-配置提交工具cz-customizable
+配置提交工具 cz-customizable
 
 ```
 npm install -D cz-customizable
 ```
 
-配置.cz-config.js文件
+配置.cz-config.js 文件
 
 ```javascript
 module.exports = {
@@ -136,12 +132,9 @@ module.exports = {
   // footerPrefix : 'ISSUES CLOSED:'
   // askForBreakingChangeFirst : true,
 };
-
 ```
 
-
-
-并配置packge.js
+并配置 packge.js
 
 ```javascript
   "config": {
@@ -150,8 +143,6 @@ module.exports = {
     }
   },
 ```
-
-
 
 安装版本工具 conventional-changelog-cli
 
@@ -165,9 +156,7 @@ npm install -g conventional-changelog-cli
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
 ```
 
-
-
-每次大版本更新vesion时，执行可以产生提交日志
+每次大版本更新 vesion 时，执行可以产生提交日志
 
 ```
 npm run log
@@ -175,12 +164,7 @@ npm run log
 
 普通提交还是正常提交，发布版本时要调整版本号
 
-
-
-
-
-## 2.stylelint配置
-
+## 2.stylelint 配置
 
 stylelint.config.js
 
@@ -334,12 +318,9 @@ module.exports = {
   },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };
-
 ```
 
-
-
-配置.stylelintignore文件
+配置.stylelintignore 文件
 
 ```
 /dist/*
@@ -347,3 +328,55 @@ module.exports = {
 publick/*
 ```
 
+## 3.封装 button 组件
+
+可以安装 vscode 插件 typescript react code snippets
+
+进行结构快速初始化
+
+button.tsx
+
+```typescript
+interface IButtonProps {
+  className?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  size?: "small" | "default" | "large";
+  type?: "primary" | "default" | "danger" | "link";
+  href?: string;
+  children?: React.ReactNode;
+}
+
+type NaviveButtonProps = Omit<React.ButtonHTMLAttributes<HTMLElement>, "type"> &
+  IButtonProps;
+type AnchorProps = Omit<React.AnchorHTMLAttributes<HTMLElement>, "type"> &
+  IButtonProps;
+
+// Partial类似于？，代表所有的类型都是一个可选属性
+type ButtonProps = Partial<NaviveButtonProps & AnchorProps>;
+const Button: React.FunctionComponent<ButtonProps> = (props) => {
+  const { className, disabled, loading, size, type, href, children, ...rest } =
+    props;
+  if (type === "link") {
+    return (
+      <a href={href} {...rest}>
+        {children}
+      </a>
+    );
+  } else {
+    return (
+      <button disabled={disabled} {...rest}>
+        {children}
+      </button>
+    );
+  }
+};
+
+export default Button;
+```
+
+我们可以导出到目录下的 index 中
+
+```typescript
+export { default as Button } from "./Button";
+```
