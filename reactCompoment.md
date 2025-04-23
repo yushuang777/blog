@@ -1,14 +1,16 @@
 # React 组件库搭建
 
+
+
 ## 1.初始化项目
 
-以 vite 为例
+以vite为例
 
-在 github 搜索 awesome-vite，其中有大量快速生成项目案例
+在github搜索awesome-vite，其中有大量快速生成项目案例
 
 在此使用 react-ts-vite-template
 
-点击 use this template 添加到自己的 github 仓库中
+点击use this template 添加到自己的github仓库中
 
 ```
 git clone https://github.com/fabien-ml/react-ts-vite-template.git
@@ -22,13 +24,15 @@ git clone https://github.com/fabien-ml/react-ts-vite-template.git
 npm run dev 启动项目
 ```
 
-配置提交工具 cz-customizable
+
+
+配置提交工具cz-customizable
 
 ```
 npm install -D cz-customizable
 ```
 
-配置.cz-config.js 文件
+配置.cz-config.js文件
 
 ```javascript
 module.exports = {
@@ -132,9 +136,12 @@ module.exports = {
   // footerPrefix : 'ISSUES CLOSED:'
   // askForBreakingChangeFirst : true,
 };
+
 ```
 
-并配置 packge.js
+
+
+并配置packge.js
 
 ```javascript
   "config": {
@@ -143,6 +150,8 @@ module.exports = {
     }
   },
 ```
+
+
 
 安装版本工具 conventional-changelog-cli
 
@@ -156,7 +165,9 @@ npm install -g conventional-changelog-cli
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
 ```
 
-每次大版本更新 vesion 时，执行可以产生提交日志
+
+
+每次大版本更新vesion时，执行可以产生提交日志
 
 ```
 npm run log
@@ -164,7 +175,12 @@ npm run log
 
 普通提交还是正常提交，发布版本时要调整版本号
 
-## 2.stylelint 配置
+
+
+
+
+## 2.stylelint配置
+
 
 stylelint.config.js
 
@@ -318,9 +334,12 @@ module.exports = {
   },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };
+
 ```
 
-配置.stylelintignore 文件
+
+
+配置.stylelintignore文件
 
 ```
 /dist/*
@@ -328,11 +347,15 @@ module.exports = {
 publick/*
 ```
 
-## 3.封装 button 组件
 
-可以安装 vscode 插件 typescript react code snippets
+
+## 3.封装button组件
+
+可以安装vscode插件 typescript react code snippets
 
 进行结构快速初始化
+
+
 
 button.tsx
 
@@ -354,7 +377,7 @@ type AnchorProps = Omit<React.AnchorHTMLAttributes<HTMLElement>, "type"> &
 
 // Partial类似于？，代表所有的类型都是一个可选属性
 type ButtonProps = Partial<NaviveButtonProps & AnchorProps>;
-const Button: React.FunctionComponent<ButtonProps> = (props) => {
+const Button: React.FunctionComponent<ButtonProps> = props => {
   const { className, disabled, loading, size, type, href, children, ...rest } =
     props;
   if (type === "link") {
@@ -373,10 +396,82 @@ const Button: React.FunctionComponent<ButtonProps> = (props) => {
 };
 
 export default Button;
+
 ```
 
-我们可以导出到目录下的 index 中
+
+
+我们可以导出到目录下的index中
 
 ```typescript
 export { default as Button } from "./Button";
 ```
+
+
+
+安装 classnames
+
+```
+npm i classnames
+```
+
+使用
+
+实战示例
+1.根据状态动态添加类名
+例如，一个导航菜单，根据当前选中的项，添加 active 类名：
+
+```typescript
+const MenuItem = ({ isActive, label }) => {
+  const itemClass = classNames('menu-item', { active: isActive });
+return <li className={itemClass}>{label}</li>;
+};
+```
+
+2.根据多种条件组合类名
+
+例如，一个表单输入框，根据验证状态添加不同的类名：
+
+```typescript
+const InputField = ({ hasError, isDisabled }) => {
+  const inputClass = classNames('input-field', {
+    'input-error': hasError,
+    'input-disabled': isDisabled,
+  });
+  return <input className={inputClass} disabled={isDisabled} />;
+};
+```
+
+3.与 CSS 模块配合使用
+如果使用了 CSS Modules，导入的类名是一个对象，可以这样使用：
+
+```typescript
+import styles from './styles.module.css';
+import classNames from 'classnames';
+
+const Component = ({ isActive }) => {
+  const className = classNames(styles.component, {
+    [styles.active]: isActive,
+  });
+
+return <div className={className}>Content</div>;
+};
+```
+
+
+
+classes中的className为组件props
+
+```typescript
+import classnames from "classnames"; 
+const classes = classnames("btn", className, {
+    [`button-${type}`]: type,
+    [`button-${size}`]: size,
+    disabled: type === "link" && disabled,
+  });
+  
+  <a href={href} className={classes} {...rest}>
+        {children}
+  </a>
+```
+
